@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import axios from 'axios'
-const API = 'https://acme-users-api-rev.herokuapp.com/api';
+import {fetchUser, fetchNotes, fetchVacations, fetchFollowingCompanies} from './api.js';
 
 function App() {
+
   const [user, setUser] = useState({fullName: "",
                                     id: "",
                                     firstName: "",
@@ -17,22 +17,7 @@ function App() {
                                     companyId: ""
                                     });
 
-  const fetchUser = async ()=> {
-    const storage = window.localStorage;
-    const userId = storage.getItem('userId');
-    if(userId){
-      try {
-        return (await axios.get(`${API}/users/detail/${userId}`)).data;
-      }
-      catch(ex){
-        storage.removeItem('userId');
-        return fetchUser();
-      }
-    }
-    const user = (await axios.get(`${API}/users/random`)).data;
-    storage.setItem('userId', user.id);
-    return user;
-  };
+
   const fetchAndSetUser = () => {
     fetchUser()
     .then( user => setUser(user));
@@ -40,6 +25,21 @@ function App() {
   useEffect(()=> {
     fetchAndSetUser()
   }, []);
+
+  const [notes, setNotes] = useState([]);
+  const [vacations, setVacations] = useState([]);
+  const [followingCompanies, setFollowingCompanies] = useState([]);
+
+  useEffect(() => {
+    if ( user.id ) {
+      Promise.all([ fetchNotes(user.id), fetchVacations(user.id), fetchFollowingCompanies(user.id) ])
+      .then (([_notes, _vacations, _followingCompanies]) => {
+        setNotes( _notes );
+        setVacations( _vacations );
+        setFollowingCompanies( _followingCompanies )
+      });
+    }
+  }, [user.id]);
 
   const changeUser = () => {
     window.localStorage.removeItem('userId');
@@ -52,6 +52,14 @@ return (
      <h2>Welcome {user.email}</h2>
      <button onClick={changeUser}>Switch User</button>
     </header>
+    <body>
+      <h2>Notes</h2>
+      <div>{notes.length} notes</div>
+      <h2>Vacations</h2>
+      <div>{vacations.length}</div>
+      <h2>Following Companies</h2>
+      <div>{followingCompanies.length}</div>
+    </body>
   </div>
 );
 }
