@@ -20,13 +20,28 @@ const fetchUser = async ()=> {
 };
 
 const fetchNotes = async (userId) => {
-  return( await axios.get(`${API}/users/${userId}/notes`) );
+  let notes = [];
+  const response =
+    await axios.get(`${API}/users/${userId}/notes`);
+  notes = response.data;
+  console.log(notes);
+  return notes;
 }
 const fetchVacations = async (userId) => {
-  return( await axios.get(`${API}/users/${userId}/vacations`) );
+  let vacations = [];
+  const response =
+    await axios.get(`${API}/users/${userId}/vacations`);
+  vacations = response.data;
+  console.log( vacations );
+  return vacations;
 }
 const fetchFollowingCompanies = async (userId) => {
-  return( await axios.get(`${API}/users/${userId}/followingCompanies`) );
+  let companies = [];
+  const response =
+    await axios.get(`${API}/users/${userId}/followingCompanies`);
+  companies = response.data;
+  console.log( companies );
+  return companies;
 }
 
 export {fetchUser, fetchVacations, fetchNotes, fetchFollowingCompanies};

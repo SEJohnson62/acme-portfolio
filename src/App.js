@@ -31,6 +31,8 @@ function App() {
   const [followingCompanies, setFollowingCompanies] = useState([]);
 
   useEffect(() => {
+    console.log("In useEffect: User id: ", user.id);
+    console.log(user);
     if ( user.id ) {
       Promise.all([ fetchNotes(user.id), fetchVacations(user.id), fetchFollowingCompanies(user.id) ])
       .then (([_notes, _vacations, _followingCompanies]) => {
@@ -39,6 +41,7 @@ function App() {
         setFollowingCompanies( _followingCompanies )
       });
     }
+
   }, [user.id]);
 
   const changeUser = () => {
@@ -53,14 +56,28 @@ return (
      <button onClick={changeUser}>Switch User</button>
     </header>
     <body>
-      <h2>Notes</h2>
-      <div>{notes.length} notes</div>
-      <h2>Vacations</h2>
-      <div>{vacations.length}</div>
-      <h2>Following Companies</h2>
-      <div>{followingCompanies.length}</div>
+      <h2>{notes.length} Notes</h2>
+      <div></div>
+      <h2>{vacations.length} Vacations</h2>
+      <div></div>
+      <h2>{followingCompanies.length} Following Companies</h2>
+      <div></div>
     </body>
   </div>
 );
 }
+/*
+<ul>
+        {
+          notes.map( note => {
+            return `
+              <li>
+                ${ note.text }
+                <button data-id='${note.id}'>X</button>
+              </li>
+            `;
+          }).join('')
+        }
+        </ul>
+        */
 export default App;

@@ -29,3 +29,12 @@ header button {
 header img {
   border-radius: 50%;
 }
+
+body > h2 {
+  background-color:teal;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  border-radius: 50%;
+}
