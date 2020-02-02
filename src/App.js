@@ -69,7 +69,7 @@ function App() {
 return (
   <div className="App">
     <header>
-    <a href='#'></a><img src={user.avatar}/>
+    <a href='#'><img src={user.avatar}/></a>
      <h2>Welcome {user.email}</h2>
      <button onClick={changeUser}>Switch User</button>
     </header>
@@ -81,11 +81,10 @@ return (
     />
 
     <main>
-      <h2>{notes.length} Notes</h2>
         { view === 'notes' && <Notes notes={ notes }/>}
-      <h2>{vacations.length} Vacations</h2>
+
         { view === 'vacations' && <Vacations vacations={ vacations }/>}
-      <h2>{followingCompanies.length} Following Companies</h2>
+
         { view === 'followingCompanies' && <FollowingCompanies followingCompanies={ followingCompanies }/>}
     </main>
 

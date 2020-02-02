@@ -3,7 +3,8 @@ import React from 'react';
 const FollowingCompanies = ({followingCompanies})=> {
 
   return(
-    <ul>
+    <div>
+      <h2>Id's of Companies This User is Following:</h2>
     {
     followingCompanies.map( company => {
       return(
@@ -11,7 +12,7 @@ const FollowingCompanies = ({followingCompanies})=> {
         { company.id }
       </li>)
     })}
-    </ul>
+    </div>
   )
 }
 

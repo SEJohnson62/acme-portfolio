@@ -1,19 +1,20 @@
 import React from 'react';
 
 const Nav = ({ view, notes, vacations, followingCompanies })=> {
-  console.log("In Nav");
+  console.log("In Nav: ");
+  console.log(vacations);
   return (
     <nav>
       <a href='#view=notes' className={ view === 'notes' ? 'selected': ''}>
-      Notes ({ notes.length })</a>
+      Notes</a>
 
+      <a href='#view=vacations' className={ view === 'vacations' ? 'selected': ''}>
+      Vacations</a>
+
+      <a href='#view=followingCompanies' className={ view === 'followingCompanies' ? 'selected': ''}>
+      Companies</a>
     </nav>
   );
 }
-/*
-<a href='#view=vacations' className={ view === 'vacations' ? 'selected': ''}>
-      Vacations ({ vacations.length })</a>
-      <a href='#view=followingCompanies' className={ view === 'followingCompanies' ? 'selected': ''}>
-      Companies ({ followingCompanies.length })</a>
-      */
+
 export default Nav;

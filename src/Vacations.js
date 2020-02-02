@@ -5,7 +5,8 @@ const Vacations = ({vacations})=> {
   const [ endDate, setEndDate ] = useState('');
   console.log("In vacations ", vacations);
   return(
-    <ul>
+    <div>
+      <h2>Vacations</h2>
     {
     vacations.map( vacation => {
       return(
@@ -13,7 +14,7 @@ const Vacations = ({vacations})=> {
         <hr />
       </li>)
     })}
-    </ul>
+    </div>
   )
 }
 

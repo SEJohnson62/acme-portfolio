@@ -42,3 +42,12 @@ body > h2 {
 main.notes {
   margin: 3rem;
 }
+
+nav {
+  background-color: burlywood;
+  display: flex;
+  justify-content: space-around;
+  height: 3rem;
+  font-size: 1.5rem;
+  align-items: center;
+}
