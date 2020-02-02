@@ -1,8 +1,25 @@
 import React, { useState, useEffect } from 'react';
+import qs from 'qs';
 import './App.css';
 import {fetchUser, fetchNotes, fetchVacations, fetchFollowingCompanies} from './api.js';
+import Nav from './Nav.js';
+import Notes from './Notes.js';
+import Vacations from './Vacations.js';
+import FollowingCompanies from './FollowingCompanies.js';
 
 function App() {
+
+  const getHash = ()=> {
+    return window.location.hash.slice(1);
+  }
+  const [ params, setParams ] = useState(qs.parse(getHash()));
+
+  useEffect(()=> {
+    window.addEventListener('hashchange', ()=> {
+      setParams(qs.parse(getHash()));
+    });
+    setParams(qs.parse(getHash()));
+  }, []);
 
   const [user, setUser] = useState({fullName: "",
                                     id: "",
@@ -31,8 +48,6 @@ function App() {
   const [followingCompanies, setFollowingCompanies] = useState([]);
 
   useEffect(() => {
-    console.log("In useEffect: User id: ", user.id);
-    console.log(user);
     if ( user.id ) {
       Promise.all([ fetchNotes(user.id), fetchVacations(user.id), fetchFollowingCompanies(user.id) ])
       .then (([_notes, _vacations, _followingCompanies]) => {
@@ -42,42 +57,40 @@ function App() {
       });
     }
 
-  }, [user.id]);
+  }, [user]);
 
   const changeUser = () => {
     window.localStorage.removeItem('userId');
     fetchAndSetUser();
   }
+
+  const { view } = params;
+
 return (
   <div className="App">
     <header>
-    <img src={user.avatar}/>
+    <a href='#'></a><img src={user.avatar}/>
      <h2>Welcome {user.email}</h2>
      <button onClick={changeUser}>Switch User</button>
     </header>
-    <body>
+    <Nav
+      view = { view }
+      notes = { notes }
+      vacations = { vacations }
+      companies = { followingCompanies }
+    />
+
+    <main>
       <h2>{notes.length} Notes</h2>
-      <div></div>
+        { view === 'notes' && <Notes notes={ notes }/>}
       <h2>{vacations.length} Vacations</h2>
-      <div></div>
+        { view === 'vacations' && <Vacations vacations={ vacations }/>}
       <h2>{followingCompanies.length} Following Companies</h2>
-      <div></div>
-    </body>
+        { view === 'followingCompanies' && <FollowingCompanies followingCompanies={ followingCompanies }/>}
+    </main>
+
   </div>
 );
 }
-/*
-<ul>
-        {
-          notes.map( note => {
-            return `
-              <li>
-                ${ note.text }
-                <button data-id='${note.id}'>X</button>
-              </li>
-            `;
-          }).join('')
-        }
-        </ul>
-        */
+
 export default App;

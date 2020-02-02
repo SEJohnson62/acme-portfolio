@@ -1,14 +1,19 @@
-const renderNotes = ()=> {
-  let html = notes.map( note => {
-    return `
-      <li>
-        ${ note.text }
-        <button data-id='${note.id}'>X</button>
-      </li>
-    `;
-  }).join('');
+import React from 'react';
 
-  html = `<h2>Notes (${ notes.length})</h2><ul>${html}</ul>`;
-  notesContainer.innerHTML = html;
-
+const Notes = ({notes})=> {
+  console.log("In Notes");
+  return(
+    <ul>
+    {
+    notes.map( note => {
+      return(
+      <li key= {note.id}>
+        { note.text }
+        <button data-id='{note.id}'>X</button>
+      </li>)
+    })}
+    </ul>
+  )
 }
+
+export default Notes;
