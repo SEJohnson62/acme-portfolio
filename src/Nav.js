@@ -1,8 +1,7 @@
 import React from 'react';
 
 const Nav = ({ view, notes, vacations, followingCompanies })=> {
-  console.log("In Nav: ");
-  console.log(vacations);
+
   return (
     <nav>
       <a href='#view=notes' className={ view === 'notes' ? 'selected': ''}>

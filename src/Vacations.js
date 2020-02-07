@@ -11,6 +11,7 @@ const Vacations = ({vacations})=> {
     vacations.map( vacation => {
       return(
       <li key= {vacation.id}>
+        {vacation.startDate} to {vacation.endDate}
         <hr />
       </li>)
     })}
